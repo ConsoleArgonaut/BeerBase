@@ -13,7 +13,9 @@ import java.util.Map;
  * Created by Drake on 20.01.2017.
  */
 public class BeerAdmin {
-    public HashMap<Integer, String> beerStyles = new HashMap<>();
+    protected HashMap<Integer, String> beerStyles = new HashMap<>();
+
+    protected ArrayList<beer> beerStorage = new ArrayList<>();
 
     public ArrayList<beer> getBeersWithFilter(String filter){
         ArrayList<beer> returnValue = new ArrayList<>();
@@ -22,8 +24,12 @@ public class BeerAdmin {
             JSONArray data = (JSONArray) jsonObject.get("data");
             for (int i = 0; i < data.length(); i++) {
                 JSONObject object = (JSONObject) data.get(i);
-                if(!object.isNull("id"))
-                    returnValue.add(new beer(object));
+                if(!object.isNull("id")){
+                    beer b = new beer(object);
+                    returnValue.add(b);
+                    if(!beerStorage.contains(b))
+                        beerStorage.add(b);
+                }
             }
         }
         catch (Exception ex){ }
@@ -31,8 +37,11 @@ public class BeerAdmin {
     }
 
     public beer getBeer(String id){
-        ArrayList<beer> beers = getBeersWithFilter("id="+id);
-        return beers.get(0);
+        ArrayList<beer> beers = getBeersWithFilter("ids="+id);
+        if(beers.size() == 0)
+            return null;
+        else
+            return beers.get(0);
     }
 
     public ArrayList<beer> getBeers(int idStyle){
