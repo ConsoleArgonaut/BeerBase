@@ -1,9 +1,13 @@
 package com.company;
 
+import com.sun.javafx.collections.MappingChange;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Drake on 20.01.2017.
@@ -11,24 +15,52 @@ import java.util.HashMap;
 public class BeerAdmin {
     public HashMap<Integer, String> beerStyles = new HashMap<>();
 
-    /* Loads the beer styles from web api **/
-    public void loadBeerStyles(){throw new NotImplementedException();}
+    public ArrayList<beer> getBeersWithFilter(String filter){
+        ArrayList<beer> returnValue = new ArrayList<>();
+        try {
+            JSONObject jsonObject = JsonReader.readJsonFromUrl("http://api.brewerydb.com/v2/beers/?key=" + ApiKey + "&" + filter);
+            JSONArray data = (JSONArray) jsonObject.get("data");
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject object = (JSONObject) data.get(i);
+                if(!object.isNull("id"))
+                    returnValue.add(new beer(object));
+            }
+        }
+        catch (Exception ex){ }
+        return returnValue;
+    }
 
-    /* Returns beer styles, Id is separated from name with:: **/
-    public ArrayList<String> printBeerStyles() {throw new NotImplementedException();}
+    public beer getBeer(String id){
+        ArrayList<beer> beers = getBeersWithFilter("id="+id);
+        return beers.get(0);
+    }
 
-    /* Returns beer styles, where name contains searched terms. Id is separated from name with:: **/
-    public ArrayList<String> printBeerStyles(String search) {throw new NotImplementedException();}
+    public ArrayList<beer> getBeers(int idStyle){
+        return getBeersWithFilter("styleId=" + idStyle);
+    }
 
-    /* Returns all beers from style. Gets JSON file from web api and parses to beer class
-    * http://api.brewerydb.com/v2/beers/?key=1511d0db4a1d6841481c672455358cff&styleId=5 **/
-    public ArrayList<String> getBeerListForStyle(int idStyle) {throw new NotImplementedException();}
+    public HashMap<Integer, String> getBeerStyles(){
+        beerStyles = new HashMap<>();
+        try{
+            JSONObject jsonObject = JsonReader.readJsonFromUrl("http://api.brewerydb.com/v2/styles/?key=" + ApiKey);
+            JSONArray data = (JSONArray) jsonObject.get("data");
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject object = (JSONObject) data.get(i);
+                beerStyles.put(object.getInt("id"), object.getString("name"));
+            }
+        }catch (Exception ex){}
+        return beerStyles;
+    }
 
-    /* Returns all Ids and Names from beers in local storage **/
-    public ArrayList<String> printBeerList(){ throw new NotImplementedException(); }
+    public HashMap<Integer, String> getBeerStyles(String searchTerm) {
+        HashMap<Integer, String> searchResult = new HashMap<>();
+        for (Integer i:beerStyles.keySet()) {
+            String style = beerStyles.get(i);
+            if(style.contains(searchTerm))
+                searchResult.put(i, style);
+        }
+        return searchResult;
+    }
 
-    /* Returns Id, Name and on a new line description of the searched beer in local storage **/
-    public ArrayList<String> printBeer(String id) { throw new NotImplementedException(); }
-
-
+    public String ApiKey = "17862d0e9821ed33bb504691196907e5";
 }

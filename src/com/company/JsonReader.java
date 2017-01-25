@@ -28,4 +28,8 @@ public class JsonReader {
             is.close();
         }
     }
+
+    public static JSONObject getJsonFromString(String jsonText) throws JSONException {
+        return new JSONObject(jsonText);
+    }
 }
