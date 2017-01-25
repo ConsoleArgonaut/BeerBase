@@ -16,7 +16,7 @@ public class BeerAdmin {
 
     /* Returns beer styles, Id is separated from name with:: **/
     public ArrayList<String> printBeerStyles() {throw new NotImplementedException();}
-    
+
     /* Returns beer styles, where name contains searched terms. Id is separated from name with:: **/
     public ArrayList<String> printBeerStyles(String search) {throw new NotImplementedException();}
 
@@ -29,4 +29,6 @@ public class BeerAdmin {
 
     /* Returns Id, Name and on a new line description of the searched beer in local storage **/
     public ArrayList<String> printBeer(String id) { throw new NotImplementedException(); }
+
+
 }
