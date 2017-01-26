@@ -6,12 +6,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.Charset;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * @author  Michael van der Heide
+ * @version 1.0
+ * @since   1.0    26.12.2016
+ */
+
 public class JsonReader {
-    //json.get("id") for getting Id, etc
+    /**
+     * Gets json string from web api url and returns a JSONObject
+     * @param url The URL to get a json object from
+     * @return A JSON Object gotten from the url
+     */
     public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
         try {
@@ -27,9 +36,5 @@ public class JsonReader {
         } finally {
             is.close();
         }
-    }
-
-    public static JSONObject getJsonFromString(String jsonText) throws JSONException {
-        return new JSONObject(jsonText);
     }
 }

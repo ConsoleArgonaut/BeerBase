@@ -4,8 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by Michael on 20.01.2017.
+ * @author  Michael van der Heide
+ * @version 1.0
+ * @since   1.0    26.12.2016
  */
+
 public class beer {
     public String id;
     public String name;
@@ -26,6 +29,9 @@ public class beer {
         idStyle = object.getInt("styleId");
     }
 
+    /**
+     * @return gets Beer as String (id;name;description;idStyle)
+     */
     @Override
     public String toString(){
         return id + ";" + name + ";" + description + ";" + idStyle;

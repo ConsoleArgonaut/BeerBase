@@ -1,22 +1,34 @@
 package com.company;
 
-import com.sun.javafx.collections.MappingChange;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
- * Created by Drake on 20.01.2017.
+ * @author  Michael van der Heide
+ * @version 1.0
+ * @since   1.0    26.12.2016
  */
 public class BeerAdmin {
+
+    /**
+     * HashMap containing ID's and names of the currently loaded beer styles
+     */
     protected HashMap<Integer, String> beerStyles = new HashMap<>();
 
+    /**
+     * All the currently loaded beers
+     */
     protected ArrayList<beer> beerStorage = new ArrayList<>();
 
+    /**
+     * Gets the beers by filter from the web api
+     * @param filter The filter to add to the url to get beers
+     * @return An ArrayList of beers gotten from the
+     * @see JsonReader
+     */
     public ArrayList<beer> getBeersWithFilter(String filter){
         ArrayList<beer> returnValue = new ArrayList<>();
         try {
@@ -36,6 +48,11 @@ public class BeerAdmin {
         return returnValue;
     }
 
+    /**
+     * Gets a beer by beer id
+     * @param id The id of the beer to get
+     * @return The searched beer
+     */
     public beer getBeer(String id){
         ArrayList<beer> beers = getBeersWithFilter("ids="+id);
         if(beers.size() == 0)
@@ -44,10 +61,19 @@ public class BeerAdmin {
             return beers.get(0);
     }
 
+    /**
+     * Gets the beers by the beer style
+     * @param idStyle The beer style to get beers
+     * @return An ArrayList of beers gotten from the
+     */
     public ArrayList<beer> getBeers(int idStyle){
         return getBeersWithFilter("styleId=" + idStyle);
     }
 
+    /**
+     * Gets all beers styles
+     * @return A HashMap containing all Beer Styles
+     */
     public HashMap<Integer, String> getBeerStyles(){
         beerStyles = new HashMap<>();
         try{
@@ -61,6 +87,11 @@ public class BeerAdmin {
         return beerStyles;
     }
 
+    /**
+     * Gets all beers styles and searches for searchTerm
+     * @param searchTerm The term that has to be in the beer style
+     * @return A HashMap containing all fitting Beer Styles
+     */
     public HashMap<Integer, String> getBeerStyles(String searchTerm) {
         HashMap<Integer, String> searchResult = new HashMap<>();
         for (Integer i:beerStyles.keySet()) {
