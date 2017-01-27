@@ -133,5 +133,13 @@ public class BeerAdmin {
         }
     }
 
+    /**
+     * Removes all beers and beer styles from local storage
+     */
+    public void clearLocalStorage(){
+        beerStorage = new ArrayList<>();
+        beerStyles = new HashMap<>();
+    }
+
     public String ApiKey = "17862d0e9821ed33bb504691196907e5";
 }

@@ -80,7 +80,7 @@ public class Main {
                     seperator();
                     boolean isManaging = true;
                     while (isManaging){
-                        switch (askQuestion("What do you wanna do?", new String[]{"Add beer", "Remove beer", "List all beers", "Remove all duplicates from storage", "Exit"})){
+                        switch (askQuestion("What do you wanna do?", new String[]{"Add beer", "Remove beer", "List all beers", "Remove all duplicates from storage", "Clear local storage", "Exit"})){
                             case 0:
                                 Beer beerToAdd = new Beer();
                                 writeline("Whats the name of your beer?");
@@ -134,6 +134,11 @@ public class Main {
                                 seperator();
                                 break;
                             case 4:
+                                beerAdmin.clearLocalStorage();
+                                writeline("Local storage cleaned");
+                                seperator();
+                                break;
+                            case 5:
                                 isManaging = false;
                                 break;
                             default:
