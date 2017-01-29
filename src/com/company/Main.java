@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 public class Main {
 
+    /**
+     * Bier-Service TUI
+     */
     public static void main(String[] args) {
         BeerAdmin beerAdmin = new BeerAdmin();
         seperator();
@@ -159,6 +162,7 @@ public class Main {
         writeline("We hope to see you again soon :)");
     }
 
+    /** Prints (writeline) a beer style */
     private static void printBeerStyles(HashMap<Integer, String> styles){
         if (styles.size() > 0)
             for (Integer i:styles.keySet()) {
@@ -167,7 +171,7 @@ public class Main {
         else
             writeline("No Beer styles were found, or loaded");
     }
-    /** Read line */
+    /** Gets input and checks it */
     private static String getInput(){
         boolean gettingInput = true;
         String returnValue = "";
@@ -179,6 +183,7 @@ public class Main {
         else
             return "";
     }
+    /** Gets input as number */
     private static int getInputAsNumber(){
         int returnValue = 0;
         boolean inputIsCorrect = false;
